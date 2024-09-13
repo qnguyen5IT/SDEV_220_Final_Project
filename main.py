@@ -72,6 +72,7 @@ while True:
 
     # Puts everything drawn on to the screen.
     # Needs to be the last thing ran other than FPS.
+    # Is the same as pygame.display.flip()
     pygame.display.update()
 
     # limits the FPS to 60.
