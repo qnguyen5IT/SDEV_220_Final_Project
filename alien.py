@@ -16,3 +16,4 @@ class Alien:
 
     def draw(self):
         # This is where the sprite gets drawn to the screen.
+        pass
