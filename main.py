@@ -9,18 +9,19 @@ from pygame.locals import *
 from player import Player
 from alien import Alien
 from scoreboard import Scoreboard
-
+from playerhealth import PlayerHealth
 
 # Has to run before using most of pygame's cmds.
 # Don't honstly know why, but it works.
 pygame.init()
-
 
 # Create the window the game will be shown in.
 # Resolution
 WINDOW_WIDTH = 600
 WINDOW_HEIGHT = 900
 # Create the window to draw to.
+
+font = pygame.font.SysFont("Assets/advanced-led-board-7.regular.ttf", 32)
 window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
 # Setup clock speed aka frames per second(FPS)
@@ -32,10 +33,10 @@ pygame.display.set_caption("Space Invaders")
 
 
 # Create the objects.
-player = Player(window)
+player = Player(window) # define health as 3
 alien = Alien(window)
 scoreboard = Scoreboard(window)
-
+health = PlayerHealth(font, 3)
 
 """ === MAIN LOOP === """
 while True:
@@ -68,6 +69,7 @@ while True:
     # to the screen.
     player.draw()
     alien.draw()
+    health.draw(window)
     scoreboard.draw()
 
     # Puts everything drawn on to the screen.
