@@ -18,7 +18,8 @@ pygame.init()
 
 # Create the window the game will be shown in.
 # Resolution
-WINDOW_WIDTH, WINDOW_HEIGHT = 1920, 1080
+WINDOW_WIDTH, WINDOW_HEIGHT = 800, 600
+print(pygame.display.list_modes())
 
 # Create the window to draw to.
 window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -51,17 +52,6 @@ alien = Alien(window)
 scoreboard = Scoreboard(window)
 
 
-# Variable to track fullscreen state
-fullscreen = False
-
-def toggle_fullscreen():
-    global fullscreen, window
-    if fullscreen:
-        window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))  # Windowed mode
-    else:
-        window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)  # Fullscreen mode
-    fullscreen = not fullscreen  # Toggle the state
-
 """ === MAIN LOOP === """
 while True:
     """ == CHECK FOR EVENTS == """
@@ -79,15 +69,15 @@ while True:
                  pygame.quit()
                  sys.exit()
             elif event.key == pygame.K_RETURN and pygame.key.get_mods() & pygame.KMOD_ALT:
-                toggle_fullscreen()
+                pygame.display.toggle_fullscreen()
 
 
     """ == UPDATE CALLS ==  """
     # This is where things are checked like collisions, did the player
     # get hit by a projectile.
+    scoreboard.update()
     player.update()
     alien.update()
-    scoreboard.update()
 
     
     """ == DRAW CALLS ==  """
@@ -101,9 +91,9 @@ while True:
 
     # This is where all of the sprites and the score get drawn
     # to the screen.
+    scoreboard.draw()
     player.draw()
     alien.draw()
-    scoreboard.draw()
 
     # Puts everything drawn on to the screen.
     # Needs to be the last thing ran other than FPS.
