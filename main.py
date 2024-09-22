@@ -9,20 +9,33 @@ from pygame.locals import *
 from player import Player
 from alien import Alien
 from scoreboard import Scoreboard
-from playerhealth import PlayerHealth
+
 
 # Has to run before using most of pygame's cmds.
 # Don't honstly know why, but it works.
 pygame.init()
 
+
 # Create the window the game will be shown in.
 # Resolution
-WINDOW_WIDTH = 600
-WINDOW_HEIGHT = 900
-# Create the window to draw to.
+WINDOW_WIDTH, WINDOW_HEIGHT = 1920, 1080
 
-font = pygame.font.SysFont("Assets/advanced-led-board-7.regular.ttf", 32)
+# Create the window to draw to.
 window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+
+WINDOW_WIDTH, WINDOW_HEIGHT = pygame.display.get_surface().get_size()
+
+#Load the background image
+background_image = pygame.image.load('Assets/game_background.png')
+
+background_image = pygame.transform.scale(background_image, (WINDOW_WIDTH, WINDOW_HEIGHT))
+
+#Load the font style
+text_font = pygame.font.SysFont("advanced-led-board-7", 30)
+
+def draw_text(text, font, text_col, x, y):
+    img = font.render(text, True, text_col)
+    window.blit(img, (x, y))
 
 # Setup clock speed aka frames per second(FPS)
 FPS = 60
@@ -33,10 +46,21 @@ pygame.display.set_caption("Space Invaders")
 
 
 # Create the objects.
-player = Player(window) # define health as 3
+player = Player(window)
 alien = Alien(window)
 scoreboard = Scoreboard(window)
-health = PlayerHealth(font, 3)
+
+
+# Variable to track fullscreen state
+fullscreen = False
+
+def toggle_fullscreen():
+    global fullscreen, window
+    if fullscreen:
+        window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))  # Windowed mode
+    else:
+        window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)  # Fullscreen mode
+    fullscreen = not fullscreen  # Toggle the state
 
 """ === MAIN LOOP === """
 while True:
@@ -46,9 +70,16 @@ while True:
     for event in pygame.event.get():
         # Check if the user clicked the close button X.
         if event.type == QUIT:
-            # Close the game.
             pygame.quit()
-            sys.exit()        
+            sys.exit()
+
+        # Exit full screen or close the game on pressing the escape key
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                 pygame.quit()
+                 sys.exit()
+            elif event.key == pygame.K_RETURN and pygame.key.get_mods() & pygame.KMOD_ALT:
+                toggle_fullscreen()
 
 
     """ == UPDATE CALLS ==  """
@@ -63,13 +94,15 @@ while True:
     # Draw the background. this should always run first.
     # Makes the background black.
     # Get weird results if not drawn.
-    window.fill((0,0,0))
+    window.blit(background_image, (0, 0))
+
+    draw_text("SCORE : 0", text_font,(225, 225, 225), 20, 30) #Line to call for the text of the scoreboard
+                                                               
 
     # This is where all of the sprites and the score get drawn
     # to the screen.
     player.draw()
     alien.draw()
-    health.draw(window)
     scoreboard.draw()
 
     # Puts everything drawn on to the screen.
