@@ -9,6 +9,7 @@ from pygame.locals import *
 from player import Player
 from alien import Alien
 from scoreboard import Scoreboard
+from playerhealth import PlayerHealth
 
 
 # Has to run before using most of pygame's cmds.
@@ -50,6 +51,7 @@ pygame.display.set_caption("Space Invaders")
 player = Player(window)
 alien = Alien(window)
 scoreboard = Scoreboard(window)
+health = PlayerHealth(text_font, 3)
 
 
 """ === MAIN LOOP === """
@@ -94,6 +96,7 @@ while True:
     scoreboard.draw()
     player.draw()
     alien.draw()
+    health.draw(window)
 
     # Puts everything drawn on to the screen.
     # Needs to be the last thing ran other than FPS.

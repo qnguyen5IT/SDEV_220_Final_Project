@@ -13,7 +13,7 @@ class PlayerHealth:
 
     def draw(self, window):
         rect = self.text.get_rect()
-        rect.center = (10, 850)
+        rect.center = (40, 560)
 
         window.blit(self.text, rect)
 
