@@ -33,7 +33,7 @@ background_image = pygame.image.load('Assets/game_background.png')
 background_image = pygame.transform.scale(background_image, (WINDOW_WIDTH, WINDOW_HEIGHT))
 
 #Load the font style
-text_font = pygame.font.SysFont("advanced-led-board-7", 30)
+text_font = pygame.font.Font("Assets/advanced-led-board-7.regular.ttf", 36)
 
 def draw_text(text, font, text_col, x, y):
     img = font.render(text, True, text_col)
