@@ -6,7 +6,7 @@ class Alien:
     def __init__(self, window, Sprite_sheet, x, y, w, h, new_width, new_height):
         # Set up variables to use, also where rects will be created at.
         self.window = window
-        self.Sprite_sheet = pygame.image.load("Assets/Sprite_sheet.png").convert()
+        self.Sprite_sheet = pygame.image.load(Sprite_sheet).convert()
 
         # Pass new_width and new_height to the get_sprite method
         self.image = self.get_sprite(x, y, w, h, new_width, new_height)
