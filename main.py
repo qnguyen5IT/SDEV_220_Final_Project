@@ -61,8 +61,7 @@ pygame.display.set_caption("Space Invaders")
 
 
 # Create the objects.
-player = Player(window, spritesheet)
-alien = Alien(window)
+alien = Alien(window, 'Assets/Sprite_sheet.png', 947, 49, 981, 673, 50, 75)
 scoreboard = Scoreboard(window)
 health = PlayerHealth(text_font, 3)
 
