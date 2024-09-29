@@ -32,6 +32,19 @@ background_image = pygame.image.load('Assets/game_background.png')
 
 background_image = pygame.transform.scale(background_image, (WINDOW_WIDTH, WINDOW_HEIGHT))
 
+#Load player sprite sheet
+spritesheet = pygame.image.load('Assets/Sprite_sheet.png').convert_alpha()
+
+#Color for the sprite sheet's background to make it transparent
+white_color = (255,255,255)
+
+
+#Create a Player object(pass both window and spritesheet)
+player = Player(window, spritesheet)
+
+# Get a frame from the sprite sheet
+frame_0 = player.draw(0, 617, 866, 0.05, white_color) #1st frame
+
 #Load the font style
 text_font = pygame.font.Font("Assets/advanced-led-board-7.regular.ttf", 36)
 
@@ -48,7 +61,6 @@ pygame.display.set_caption("Space Invaders")
 
 
 # Create the objects.
-player = Player(window)
 alien = Alien(window, 'Assets/Sprite_sheet.png', 947, 49, 981, 673, 50, 75)
 scoreboard = Scoreboard(window)
 health = PlayerHealth(text_font, 3)
@@ -90,11 +102,10 @@ while True:
 
     draw_text("SCORE : 0", text_font,(225, 225, 225), 20, 30) #Line to call for the text of the scoreboard
                                                                
-
     # This is where all of the sprites and the score get drawn
     # to the screen.
+    window.blit(frame_0, (400,550))
     scoreboard.draw()
-    player.draw()
     alien.draw()
     health.draw(window)
 
