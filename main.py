@@ -1,4 +1,4 @@
-# AUTHORS: Marcus Ed. Butler, 
+# AUTHORS: Anthony Hernandez, Iteoluwakiisi George Olaniyan, Mang Nung, Marcus Ed. Butler, Quang Nguyen
 # VERSION: 2024-09-12_R0
 # DESCRIPTION: A simple re-creation of Space Invaders.
 
