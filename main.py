@@ -29,7 +29,7 @@ WINDOW_WIDTH, WINDOW_HEIGHT = pygame.display.get_surface().get_size()
 
 #Create explosion class
 class Explosion(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.images = []
         for num in range(1, 7):
@@ -39,6 +39,9 @@ class Explosion(pygame.sprite.Sprite):
         self.index = 0
         self.image = self.images[self.index]
         self.rect = self.image.get_rect()
+        
+    def create(self, x, y):
+        self.index = 0
         self.rect.center = [x, y]
         self.counter = 0
     
@@ -56,6 +59,7 @@ class Explosion(pygame.sprite.Sprite):
         if self.index >= len(self.images) - 1 and self.counter >= explosion_speed:
             self.kill()
 
+explosion = Explosion()
 
 explosion_group = pygame.sprite.Group()
 
@@ -116,6 +120,10 @@ while True:
                  sys.exit()
             elif event.key == pygame.K_RETURN and pygame.key.get_mods() & pygame.KMOD_ALT:
                 pygame.display.toggle_fullscreen()
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            pos = pygame.mouse.get_pos()
+            explosion.create(pos[0], pos[1])
+            explosion_group.add(explosion)
 
 
     """ == UPDATE CALLS ==  """
@@ -136,14 +144,6 @@ while True:
     explosion_group.update()
 
 
-    #event handler
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run = False
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            pos = pygame.mouse.get_pos()
-            explosion = Explosion(pos[0], pos[1])
-            explosion_group.add(explosion)
 
 
 
