@@ -1,4 +1,4 @@
-# AUTHORS: Marcus Ed. Butler, 
+# AUTHORS: Anthony Hernandez, Iteoluwakiisi George Olaniyan, Mang Nung, Marcus Ed. Butler, Quang Nguyen
 # VERSION: 2024-09-12_R0
 # DESCRIPTION: A simple re-creation of Space Invaders.
 
@@ -26,6 +26,42 @@ print(pygame.display.list_modes())
 window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
 WINDOW_WIDTH, WINDOW_HEIGHT = pygame.display.get_surface().get_size()
+
+#Create explosion class
+class Explosion(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.images = []
+        for num in range(1, 7):
+            img = pygame.image.load(f"img/exp{num}.png")
+            img = pygame.transform.scale(img, (100, 100))
+            self.images.append(img)
+        self.index = 0
+        self.image = self.images[self.index]
+        self.rect = self.image.get_rect()
+        
+    def create(self, x, y):
+        self.index = 0
+        self.rect.center = [x, y]
+        self.counter = 0
+    
+    def update(self):
+        explosion_speed = 4
+        #update explosion animation
+        self.counter += 1
+
+        if self.counter >= explosion_speed and self.index < len(self.images) - 1:
+            self.counter = 0
+            self.index += 1
+            self.image = self.images[self.index]
+
+        #if the animation is complete, reset the animation index
+        if self.index >= len(self.images) - 1 and self.counter >= explosion_speed:
+            self.kill()
+
+explosion = Explosion()
+
+explosion_group = pygame.sprite.Group()
 
 #Load the background image
 background_image = pygame.image.load('Assets/game_background.png')
@@ -86,6 +122,10 @@ while True:
                  sys.exit()
             elif event.key == pygame.K_RETURN and pygame.key.get_mods() & pygame.KMOD_ALT:
                 pygame.display.toggle_fullscreen()
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            pos = pygame.mouse.get_pos()
+            explosion.create(pos[0], pos[1])
+            explosion_group.add(explosion)
 
 
     """ == UPDATE CALLS ==  """
@@ -95,12 +135,19 @@ while True:
     player.update()
     alien.update()
 
-    
     """ == DRAW CALLS ==  """
     # Draw the background. this should always run first.
     # Makes the background black.
     # Get weird results if not drawn.
     window.blit(background_image, (0, 0))
+
+
+    explosion_group.draw(window)
+    explosion_group.update()
+
+
+
+
 
     draw_text("SCORE : 0", text_font,(225, 225, 225), 20, 30) #Line to call for the text of the scoreboard
                                                                
