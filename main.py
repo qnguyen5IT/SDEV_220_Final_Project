@@ -43,7 +43,9 @@ white_color = (255,255,255)
 player = Player(window, spritesheet)
 
 # Get a frame from the sprite sheet
-frame_0 = player.draw(0, 617, 866, 0.05, white_color) #1st frame
+# 1st frame
+frame_0 = player.draw(0, 617, 866, 0.05, white_color) 
+
 
 #Load the font style
 text_font = pygame.font.Font("Assets/advanced-led-board-7.regular.ttf", 36)
