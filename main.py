@@ -27,6 +27,8 @@ window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
 WINDOW_WIDTH, WINDOW_HEIGHT = pygame.display.get_surface().get_size()
 
+
+
 #Create explosion class
 class Explosion(pygame.sprite.Sprite):
     def __init__(self):
@@ -99,10 +101,15 @@ pygame.display.set_caption("Space Invaders")
 
 
 # Create the objects.
-alien = Alien(window, 'Assets/Sprite_sheet.png', 947, 49, 981, 673, 50, 75)
+alien_speed = 0
+alien = Alien(window, 'Assets/Sprite_sheet.png', 947, 49, 981, 673, 30, 20, 2, 0)
+alien.create_aliens(row_amount=5)
 scoreboard = Scoreboard(window)
 health = PlayerHealth(text_font, 3)
 
+# Starting positions of aliens. 
+x = 20
+y = 20
 
 """ === MAIN LOOP === """
 while True:
@@ -126,6 +133,18 @@ while True:
             pos = pygame.mouse.get_pos()
             explosion.create(pos[0], pos[1])
             explosion_group.add(explosion)
+   
+    keys = pygame.key.get_pressed()
+
+    if keys[pygame.K_w]:
+         y-=1
+    if keys[pygame.K_s]:
+        y+=1
+    if keys[pygame.K_d]:
+      x+=1
+    if keys[pygame.K_a]:
+        x-=1
+
 
 
     """ == UPDATE CALLS ==  """
