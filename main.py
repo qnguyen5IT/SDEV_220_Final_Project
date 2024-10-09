@@ -28,6 +28,50 @@ window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 WINDOW_WIDTH, WINDOW_HEIGHT = pygame.display.get_surface().get_size()
 
 
+#Create bullets class
+# Player = green
+# Aliens = red
+class Bullet():
+    def __init__(self, window):
+        self.window = window
+        self.height = pygame.display.get_surface().get_size()[1]
+        self.bullets = []
+        self.speed = 3
+
+        self.player_color = (0,255,0) 
+        self.alien_color = (255,0,0) 
+
+
+    def create(self, x, y, direction, entity):
+        self.bullets.append({"position":[x, y], "direction":direction, "entity":entity})
+
+
+    def update(self):
+        for bullet in self.bullets[:]:
+            # Update position and delete if not on screen
+            if bullet["direction"] == "down":
+                bullet["position"][1] += self.speed
+
+                # Delete
+                if bullet["position"][1] > self.height:
+                    self.bullets.remove(bullet)
+            else:
+                bullet["position"][1] -= self.speed
+
+                # Delete
+                if bullet["position"][1] < -10:
+                    self.bullets.remove(bullet)
+            
+    
+            # Draw to screen.
+            if bullet["entity"] == "player":
+                pygame.draw.circle(self.window, self.player_color, (bullet["position"][0], bullet["position"][1]), 4)
+            else:
+                pygame.draw.circle(self.window, self.alien_color, (bullet["position"][0], bullet["position"][1]), 4)
+
+        
+bullet = Bullet(window)
+
 
 #Create explosion class
 class Explosion(pygame.sprite.Sprite):
@@ -111,6 +155,8 @@ health = PlayerHealth(text_font, 3)
 x = 20
 y = 20
 
+bullet.create(20, 200, "up", "player")
+
 """ === MAIN LOOP === """
 while True:
     """ == CHECK FOR EVENTS == """
@@ -176,6 +222,7 @@ while True:
     scoreboard.draw()
     alien.draw()
     health.draw(window)
+    bullet.update()
 
     # Puts everything drawn on to the screen.
     # Needs to be the last thing ran other than FPS.
