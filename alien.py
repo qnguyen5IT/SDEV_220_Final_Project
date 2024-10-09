@@ -31,14 +31,14 @@ class Alien:
         self.aliens = []
         spawn_x = self.rect.x
         spawn_y = 0
-        alien_spacing = 5
+        alien_spacing = 20
         for number in range(row_amount):
             # Created 10 aliens place in a row.
             for number2 in range(10):
                 alien = pygame.Rect(spawn_x, spawn_y, self.rect.width, self.rect.height)
                 #save alien rect to list. 
                 self.aliens.append(alien)
-                spawn_x += 50
+                spawn_x += 60
 
             spawn_x = self.rect.x
             spawn_y += self.rect.height + alien_spacing
@@ -57,7 +57,7 @@ class Alien:
 
         # Check if the rightmost alien has hit the window's edge.
         highest_x = max(alien.x for alien in self.aliens)
-        if highest_x > self.window.get_width() - 20:
+        if highest_x > self.window.get_width() - 60:
             for alien in self.aliens:
                 alien.y += 15
             self.direction = "left"
