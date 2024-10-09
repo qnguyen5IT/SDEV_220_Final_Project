@@ -83,8 +83,6 @@ health = PlayerHealth(text_font, 3)
 x = 20
 y = 20
 
-bullet.create(20, 200, "up", "player")
-
 """ === MAIN LOOP === """
 while True:
     """ == CHECK FOR EVENTS == """
