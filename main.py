@@ -54,7 +54,7 @@ player = Player(window, spritesheet)
 
 # Get a frame from the sprite sheet
 # 1st frame
-frame_0 = player.draw(0, 617, 866, 0.05, white_color) 
+frame = player.draw(0, 617, 866, 0.05, white_color) 
 
 
 #Load the font style
@@ -83,6 +83,12 @@ health = PlayerHealth(text_font, 3)
 x = 20
 y = 20
 
+
+# Starting point of the ship
+x = 400
+y = 500
+
+
 """ === MAIN LOOP === """
 while True:
     """ == CHECK FOR EVENTS == """
@@ -106,14 +112,14 @@ while True:
             explosion.create(pos[0], pos[1])
             explosion_group.add(explosion)
    
+   # Moving the player
     keys = pygame.key.get_pressed()
-
     if keys[pygame.K_w]:
-         y-=1
+        y-=1
     if keys[pygame.K_s]:
         y+=1
     if keys[pygame.K_d]:
-      x+=1
+        x+=1
     if keys[pygame.K_a]:
         x-=1
 
@@ -144,7 +150,7 @@ while True:
                                                                
     # This is where all of the sprites and the score get drawn
     # to the screen.
-    window.blit(frame_0, (400,550))
+    window.blit(frame, (x,y))
     scoreboard.draw()
     alien.draw()
     health.draw(window)
