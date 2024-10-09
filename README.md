@@ -1,5 +1,12 @@
 # Space Invaders Project
 
+![](readme_assets/gameplay.png)
+
+## Install
+### Dependencies
+- python3
+- pygame
+
 ## Credits
 ### Programmers
 - Anthony Hernandez
