@@ -126,7 +126,7 @@ while True:
     # get hit by a projectile.
     scoreboard.update()
     player.update()
-    alien.update()
+    alien.update(bullet)
 
     """ == DRAW CALLS ==  """
     # Draw the background. this should always run first.

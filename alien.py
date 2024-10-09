@@ -1,6 +1,8 @@
 import pygame, sys
 from pygame.locals import *
 
+from random import randint
+
 
 class Alien:
     def __init__(self, window, Sprite_sheet, x, y, w, h, new_width, new_height, speed_x, speed_y):
@@ -44,7 +46,7 @@ class Alien:
             spawn_y += self.rect.height + alien_spacing
 
 
-    def update(self):
+    def update(self, bullet):
         # This is where things like collision detection, animations changes, checks to
         # see if the alien was hit by a bullet.
 
@@ -54,6 +56,13 @@ class Alien:
                 alien.x += self.speed_x 
             elif self.direction == "left":
                 alien.x -= self.speed_x 
+
+            # Fire at player.
+            is_fire = randint(1, 400)
+            if is_fire == 1:
+                bullet.create(alien.x + 16, alien.y + 16, "down", "alien")
+            
+            
 
         # Check if the rightmost alien has hit the window's edge.
         highest_x = max(alien.x for alien in self.aliens)
@@ -68,8 +77,11 @@ class Alien:
             for alien in self.aliens:
                 alien.y += 15
             self.direction = "right"
-        pass
 
+
+        
+
+        
 
     def get_sprite(self, x, y, w, h, new_width, new_height):
         alien = pygame.Surface((w, h)).convert()
@@ -85,4 +97,3 @@ class Alien:
         # This is where the sprite gets drawn to the screen.
         for alien_rect in self.aliens:
             self.window.blit(self.image, alien_rect.topleft)
-        pass
