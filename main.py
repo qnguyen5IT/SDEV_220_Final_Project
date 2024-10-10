@@ -44,17 +44,16 @@ background_image = pygame.transform.scale(background_image, (WINDOW_WIDTH, WINDO
 
 #Load player sprite sheet
 spritesheet = pygame.image.load('Assets/Sprite_sheet.png').convert_alpha()
+# spritesheet = pygame.transform.scale(spritesheet, (WINDOW_WIDTH-580, WINDOW_HEIGHT-480))
+
 
 #Color for the sprite sheet's background to make it transparent
 white_color = (255,255,255)
 
 
-#Create a Player object(pass both window and spritesheet)
-player = Player(window, spritesheet)
 
 # Get a frame from the sprite sheet
 # 1st frame
-frame = player.draw(0, 617, 866, 0.05, white_color) 
 
 
 #Load the font style
@@ -78,15 +77,17 @@ alien = Alien(window, 'Assets/Sprite_sheet.png', 947, 49, 981, 673, 30, 20, 2, 0
 alien.create_aliens(row_amount=5)
 scoreboard = Scoreboard(window)
 health = PlayerHealth(text_font, 3)
+#Create a Player object(pass both window and spritesheet)
+player = Player(window, spritesheet, white_color)
 
 # Starting positions of aliens. 
-x = 20
-y = 20
+alien_x = 20
+alien_y = 20
 
 
 # Starting point of the ship
-x = 400
-y = 500
+ship_x = 400
+ship_y = 500
 
 
 """ === MAIN LOOP === """
@@ -107,21 +108,27 @@ while True:
                  sys.exit()
             elif event.key == pygame.K_RETURN and pygame.key.get_mods() & pygame.KMOD_ALT:
                 pygame.display.toggle_fullscreen()
+
+            # Player Controls
+            if event.key == pygame.K_RIGHT:
+                player.right = True
+            if event.key == pygame.K_LEFT:
+                player.left = True
+
+
+        if event.type == pygame.KEYUP:
+           # Player Controls
+            if event.key == pygame.K_RIGHT:
+                player.right = False
+            if event.key == pygame.K_LEFT:
+                player.left = False
+ 
+
         elif event.type == pygame.MOUSEBUTTONDOWN:
             pos = pygame.mouse.get_pos()
             explosion.create(pos[0], pos[1])
             explosion_group.add(explosion)
    
-   # Moving the player
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_w]:
-        y-=1
-    if keys[pygame.K_s]:
-        y+=1
-    if keys[pygame.K_d]:
-        x+=1
-    if keys[pygame.K_a]:
-        x-=1
 
 
 
@@ -150,9 +157,11 @@ while True:
                                                                
     # This is where all of the sprites and the score get drawn
     # to the screen.
-    window.blit(frame, (x,y))
+    ship_x += 1
+    # window.blit(frame, (ship_x,ship_y))
     scoreboard.draw()
     alien.draw()
+    player.draw()
     health.draw(window)
     bullet.update()
 
