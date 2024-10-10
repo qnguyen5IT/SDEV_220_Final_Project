@@ -34,6 +34,12 @@ class HomeScreen(Screen):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN and pygame.key.get_mods() & pygame.KMOD_ALT:
+                    pygame.display.toggle_fullscreen()
+
+                    
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if rect.collidepoint(event.pos):
                     return False
@@ -74,8 +80,7 @@ class GameScreen(Screen):
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
                     sys.exit()
-                elif event.key == pygame.K_RETURN and pygame.key.get_mods() & pygame.KMOD_ALT:
-                    pygame.display.toggle_fullscreen()
+
 
                 # Player Controls
                 if event.key == pygame.K_RIGHT:
