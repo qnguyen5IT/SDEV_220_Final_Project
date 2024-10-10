@@ -87,6 +87,9 @@ class GameScreen(Screen):
                     self.player.right = True
                 if event.key == pygame.K_LEFT:
                     self.player.left = True
+                ## Fire button
+                if event.key == pygame.K_SPACE:
+                    self.player.fire = True
 
             if event.type == pygame.KEYUP:
                 # Player Controls (keyup)
@@ -103,10 +106,10 @@ class GameScreen(Screen):
         # This is where things are checked like collisions, did the player
         # get hit by a projectile.
         self.scoreboard.update()
-        self.player.update(self.health)
+        self.player.update(self.health, self.bullet)
         self.alien.update(self.bullet)
         self.explosion_group.update()
-        self.bullet.update(self.player, self.health, self.explosion, self.explosion_group)
+        self.bullet.update(self.player, self.health, self.explosion, self.explosion_group, self.alien, self.scoreboard)
 
         # WHENEVER PLAYER DIES, RETURN FALSE
 
@@ -121,7 +124,7 @@ class GameScreen(Screen):
         self.explosion_group.draw(self.game.window)
         self.health.draw(self.game.window)
 
-        self.game.draw_text("SCORE : 0", Resources.TEXT_FONT,(225, 225, 225), 20, 30) #Line to call for the text of the scoreboard
+        
 
     def dispose(self):
         self.alien.dispose()

@@ -20,10 +20,10 @@ class Bullet():
     def create(self, x, y, direction, entity):
         self.bullets.append({"position":[x, y], "direction":direction, "entity":entity})
 
-    def update(self, player, health, explosion, explosion_group):
+    def update(self, player, health, explosion, explosion_group, alien, scoreboard):
         for bullet in self.bullets[:]:
             # Check if bullet hit player
-            if player.rect.collidepoint(bullet["position"][0], bullet["position"][1]) and player.cooldown_time <= 0 and player.destroyed == False:
+            if player.rect.collidepoint(bullet["position"][0], bullet["position"][1]) and bullet["entity"] == 'alien' and player.cooldown_time <= 0 and player.destroyed == False:
                 # Give player temporary invisibility.
                 player.cooldown()
                 # Blow up ship animation
@@ -33,7 +33,19 @@ class Bullet():
                 health.updateHealth(health.hitpoints - 1)
                 # Remove all bullets.
                 self.bullets = []
+
             # Check if bullet hit alien
+            for alien_ship in alien.aliens[:]:
+                if alien_ship.collidepoint(bullet["position"][0], bullet["position"][1]) and bullet["entity"] == 'player':
+                    # Blow up alien ship animation
+                    explosion.create(alien_ship.centerx, alien_ship.centery)
+                    explosion_group.add(explosion)
+                    # Delete alien
+                    alien.aliens.remove(alien_ship)
+                    # Delete bullet
+                    self.bullets.remove(bullet)
+                    # Rank up score.
+                    scoreboard.score += 20
             
             # Update position and delete if not on screen
             if bullet["direction"] == "down":

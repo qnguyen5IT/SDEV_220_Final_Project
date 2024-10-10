@@ -53,31 +53,32 @@ class Alien:
         # This is where things like collision detection, animations changes, checks to
         # see if the alien was hit by a bullet.
 
-        # Move aliens and handle direction changes. 
-        for alien in self.aliens:
-            if self.direction == "right":
-                alien.x += self.speed_x 
-            elif self.direction == "left":
-                alien.x -= self.speed_x 
-
-            # Fire at player.
-            is_fire = randint(1, 400)
-            if is_fire == 1:
-                bullet.create(alien.x + 16, alien.y + 16, "down", "alien")
-            
-        # Check if the rightmost alien has hit the window's edge.
-        highest_x = max(alien.x for alien in self.aliens)
-        if highest_x > self.window.get_width() - 60:
+        if len(self.aliens) > 0:
+            # Move aliens and handle direction changes. 
             for alien in self.aliens:
-                alien.y += 15
-            self.direction = "left"
+                if self.direction == "right":
+                    alien.x += self.speed_x 
+                elif self.direction == "left":
+                    alien.x -= self.speed_x 
 
-        # Check if the leftmost alien has hit the window's edge.
-        lowest_x = min(alien.x for alien in self.aliens)
-        if lowest_x < 20:
-            for alien in self.aliens:
-                alien.y += 15
-            self.direction = "right"
+                # Fire at player.
+                is_fire = randint(1, 400)
+                if is_fire == 1:
+                    bullet.create(alien.x + 16, alien.y + 16, "down", "alien")
+                
+            # Check if the rightmost alien has hit the window's edge.
+            highest_x = max(alien.x for alien in self.aliens)
+            if highest_x > self.window.get_width() - 60:
+                for alien in self.aliens:
+                    alien.y += 15
+                self.direction = "left"
+
+            # Check if the leftmost alien has hit the window's edge.
+            lowest_x = min(alien.x for alien in self.aliens)
+            if lowest_x < 20:
+                for alien in self.aliens:
+                    alien.y += 15
+                self.direction = "right"
 
 
         

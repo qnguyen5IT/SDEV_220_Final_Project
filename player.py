@@ -23,6 +23,7 @@ class Player:
         self.destroyed = False
     
         self.movement = True
+        self.fire = False     
         self.right = False
         self.left = False
 
@@ -33,7 +34,7 @@ class Player:
     def dispose(self):
         del self.image
 
-    def update(self, health):
+    def update(self, health, bullet):
         # Player colliding with bullets is done in projectiles module.
 
         # Player Controls
@@ -41,11 +42,17 @@ class Player:
             self.cooldown_time -= 1
         if self.cooldown_time <= 0:
             self.movement = True
-            
+
+        # Movment
         if self.right == True and self.rect.right < self.window.get_width() and self.movement:
             self.rect.x += self.speed
         if self.left == True and self.rect.x > 0 and self.movement:
             self.rect.x -= self.speed
+
+        # Fire (shoot)
+        if self.fire == True:
+            bullet.create(self.rect.centerx, self.rect.centery, "up", "player")
+            self.fire = False
 
         # Check players health.
         # If health == 0 GameOver.
