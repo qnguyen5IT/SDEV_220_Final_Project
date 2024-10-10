@@ -20,8 +20,21 @@ class Bullet():
     def create(self, x, y, direction, entity):
         self.bullets.append({"position":[x, y], "direction":direction, "entity":entity})
 
-    def update(self):
+    def update(self, player, health, explosion, explosion_group):
         for bullet in self.bullets[:]:
+            # Check if bullet hit player
+            if player.rect.collidepoint(bullet["position"][0], bullet["position"][1]) and player.cooldown_time <= 0 and player.destroyed == False:
+                # Give player temporary invisibility.
+                player.cooldown()
+                # Blow up ship animation
+                explosion.create(player.rect.centerx, player.rect.centery)
+                explosion_group.add(explosion)
+                # Lower player health by 1.
+                health.updateHealth(health.hitpoints - 1)
+                # Remove all bullets.
+                self.bullets = []
+            # Check if bullet hit alien
+            
             # Update position and delete if not on screen
             if bullet["direction"] == "down":
                 bullet["position"][1] += self.speed
@@ -56,6 +69,8 @@ class Explosion(pygame.sprite.Sprite):
         self.index = 0
         self.image = self.images[self.index]
         self.rect = self.image.get_rect()
+        self.counter = 0
+
         
     def create(self, x, y):
         self.index = 0

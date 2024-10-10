@@ -82,14 +82,14 @@ class GameScreen(Screen):
                     sys.exit()
 
 
-                # Player Controls
+                # Player Controls (keydown)
                 if event.key == pygame.K_RIGHT:
                     self.player.right = True
                 if event.key == pygame.K_LEFT:
                     self.player.left = True
 
             if event.type == pygame.KEYUP:
-            # Player Controls
+                # Player Controls (keyup)
                 if event.key == pygame.K_RIGHT:
                     self.player.right = False
                 if event.key == pygame.K_LEFT:
@@ -103,10 +103,10 @@ class GameScreen(Screen):
         # This is where things are checked like collisions, did the player
         # get hit by a projectile.
         self.scoreboard.update()
-        self.player.update()
+        self.player.update(self.health)
         self.alien.update(self.bullet)
         self.explosion_group.update()
-        self.bullet.update()
+        self.bullet.update(self.player, self.health, self.explosion, self.explosion_group)
 
         # WHENEVER PLAYER DIES, RETURN FALSE
 

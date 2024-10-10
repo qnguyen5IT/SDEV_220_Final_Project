@@ -19,20 +19,40 @@ class Player:
         self.rect.centerx = self.window.get_width() // 2
         self.rect.bottom = self.window.get_height() - 70
 
+        self.cooldown_time = 0
+        self.destroyed = False
+    
+        self.movement = True
         self.right = False
         self.left = False
+
+    def cooldown(self):
+        # Time it takes for player to spawn back be invinsible.
+        self.cooldown_time = 50
 
     def dispose(self):
         del self.image
 
-    def update(self):
-        # This is where things like collision detection, animations changes, checks to
-        # see if the player was hit by a bullet or an alien crashed into them.
+    def update(self, health):
+        # Player colliding with bullets is done in projectiles module.
+
         # Player Controls
-        if self.right == True and self.rect.right < self.window.get_width():
+        if self.cooldown_time > 0:
+            self.cooldown_time -= 1
+        if self.cooldown_time <= 0:
+            self.movement = True
+            
+        if self.right == True and self.rect.right < self.window.get_width() and self.movement:
             self.rect.x += self.speed
-        if self.left == True and self.rect.x > 0:
+        if self.left == True and self.rect.x > 0 and self.movement:
             self.rect.x -= self.speed
+
+        # Check players health.
+        # If health == 0 GameOver.
+        if health.hitpoints == 0:
+            self.destroyed = True
+            self.movement = False
+        
             
     def get_sprite(self, x, y, w, h, new_width, new_height):
         player = pygame.Surface((w, h)).convert()
@@ -45,5 +65,7 @@ class Player:
 
 
     def draw(self):
-        # This is where the sprite get drawn to the screen.
-        self.window.blit(self.image, (self.rect.x, self.rect.y))
+        if self.cooldown_time % 10 == 0 and self.destroyed == False:
+            # This is where the sprite get drawn to the screen.
+            self.window.blit(self.image, (self.rect.x, self.rect.y))
+        
