@@ -112,7 +112,7 @@ class GameScreen(Screen):
         self.bullet.update(self.player, self.health, self.explosion, self.explosion_group, self.alien, self.scoreboard)
 
         # WHENEVER PLAYER DIES, RETURN FALSE
-
+        print(Resources.game_over)
         self.ship_x += 1 
 
         return True

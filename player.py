@@ -1,6 +1,8 @@
 import pygame, sys
 from pygame.locals import *
 
+from resources import Resources
+
 
 class Player:
     def __init__(self, window, image, color):
@@ -59,6 +61,7 @@ class Player:
         if health.hitpoints == 0:
             self.destroyed = True
             self.movement = False
+            Resources.game_over = True
         
             
     def get_sprite(self, x, y, w, h, new_width, new_height):

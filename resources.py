@@ -1,6 +1,7 @@
 import pygame
 
 class Resources:
+    game_over = False
     FPS:int = 60
     WINDOW_WIDTH:int = 800
     WINDOW_HEIGHT:int = 600

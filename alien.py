@@ -3,6 +3,8 @@ from pygame.locals import *
 
 from random import randint
 
+from resources import Resources
+
 
 class Alien:
     def __init__(self, window, Sprite_sheet, x, y, w, h, new_width, new_height, speed_x, speed_y):
@@ -56,6 +58,11 @@ class Alien:
         if len(self.aliens) > 0:
             # Move aliens and handle direction changes. 
             for alien in self.aliens:
+                # Check if aliens have made it to the bottom of the screen.
+                if alien.bottom > self.window.get_height():
+                    # Game Over
+                    Resources.game_over = True
+
                 if self.direction == "right":
                     alien.x += self.speed_x 
                 elif self.direction == "left":
