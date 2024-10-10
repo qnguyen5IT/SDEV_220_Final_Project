@@ -22,6 +22,8 @@ class Player:
         self.right = False
         self.left = False
 
+    def dispose(self):
+        del self.image
 
     def update(self):
         # This is where things like collision detection, animations changes, checks to
@@ -32,8 +34,6 @@ class Player:
         if self.left == True and self.rect.x > 0:
             self.rect.x -= self.speed
             
-
-
     def get_sprite(self, x, y, w, h, new_width, new_height):
         player = pygame.Surface((w, h)).convert()
         player.set_colorkey((255, 255, 255)) # Sprite background is white

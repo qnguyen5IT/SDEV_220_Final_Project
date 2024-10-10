@@ -14,10 +14,11 @@ class Bullet():
         self.player_color = (0,255,0) 
         self.alien_color = (255,0,0) 
 
-
+    def dispose(self):
+        del self.bullets[:]
+        
     def create(self, x, y, direction, entity):
         self.bullets.append({"position":[x, y], "direction":direction, "entity":entity})
-
 
     def update(self):
         for bullet in self.bullets[:]:
@@ -60,6 +61,12 @@ class Explosion(pygame.sprite.Sprite):
         self.index = 0
         self.rect.center = [x, y]
         self.counter = 0
+
+    def dispose(self):
+        for image in self.images:
+            del image
+        del self.images[:]
+        del self.image
     
     def update(self):
         explosion_speed = 4

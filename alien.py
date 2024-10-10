@@ -45,6 +45,9 @@ class Alien:
             spawn_x = self.rect.x
             spawn_y += self.rect.height + alien_spacing
 
+    def dispose(self):
+        del self.aliens[:]
+        del self.image
 
     def update(self, bullet):
         # This is where things like collision detection, animations changes, checks to
@@ -62,8 +65,6 @@ class Alien:
             if is_fire == 1:
                 bullet.create(alien.x + 16, alien.y + 16, "down", "alien")
             
-            
-
         # Check if the rightmost alien has hit the window's edge.
         highest_x = max(alien.x for alien in self.aliens)
         if highest_x > self.window.get_width() - 60:
