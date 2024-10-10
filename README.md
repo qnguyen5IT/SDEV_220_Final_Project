@@ -6,6 +6,13 @@
 ### Dependencies
 - python3
 - pygame
+## Instructions
+| Key(s) | Description |
+|--------|-------------|
+| **Space** | Fire |
+|**Left** and **Right** button | Move |
+|**Alt**+**Enter** | On title screen to toggle fullscreen. |
+|**Esc** | Exit Game |
 
 ## Credits
 ### Programmers
