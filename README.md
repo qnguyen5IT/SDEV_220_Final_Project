@@ -7,6 +7,15 @@
 - python3
 - pygame
 ## Instructions
+### To Play
+<p>In the root directory type:</p>
+
+```
+python main.py
+```
+
+### Controls
+
 | Key(s) | Description |
 |--------|-------------|
 | **Space** | Fire |
