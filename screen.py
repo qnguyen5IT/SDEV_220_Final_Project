@@ -31,6 +31,9 @@ class HomeScreen(Screen):
         rect.center = (400, 300)
 
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if rect.collidepoint(event.pos):
                     return False
@@ -64,6 +67,9 @@ class GameScreen(Screen):
 
     def update(self):
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
@@ -128,6 +134,9 @@ class DeathScreen(Screen):
         rect.center = (400, 300)
         
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if rect.collidepoint(event.pos):
                     return False
