@@ -54,7 +54,6 @@ class Alien:
     def update(self, bullet):
         # This is where things like collision detection, animations changes, checks to
         # see if the alien was hit by a bullet.
-
         if len(self.aliens) > 0:
             # Move aliens and handle direction changes. 
             for alien in self.aliens:
@@ -86,7 +85,9 @@ class Alien:
                 for alien in self.aliens:
                     alien.y += 15
                 self.direction = "right"
-
+        else:
+            # Player has won!
+            Resources.player_won = True
 
         
 
