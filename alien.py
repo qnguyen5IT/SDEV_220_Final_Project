@@ -3,8 +3,7 @@ from pygame.locals import *
 
 from random import randint
 
-from resources import Resources
-
+from playerdata import PlayerData
 
 class Alien:
     def __init__(self, window, Sprite_sheet, x, y, w, h, new_width, new_height, speed_x, speed_y):
@@ -60,7 +59,8 @@ class Alien:
                 # Check if aliens have made it to the bottom of the screen.
                 if alien.bottom > self.window.get_height():
                     # Game Over
-                    Resources.game_over = True
+                    PlayerData.GAME_OVER = True
+                    PlayerData.PLAYER_WON = False
 
                 if self.direction == "right":
                     alien.x += self.speed_x 
@@ -87,11 +87,8 @@ class Alien:
                 self.direction = "right"
         else:
             # Player has won!
-            Resources.player_won = True
-
-        
-
-        
+            PlayerData.PLAYER_WON = True
+            PlayerData.GAME_OVER = True
 
     def get_sprite(self, x, y, w, h, new_width, new_height):
         alien = pygame.Surface((w, h)).convert()

@@ -1,7 +1,7 @@
 import pygame, sys
 from pygame.locals import *
 
-from resources import Resources
+from playerdata import PlayerData
 
 
 class Player:
@@ -22,8 +22,7 @@ class Player:
         self.rect.bottom = self.window.get_height() - 70
 
         self.cooldown_time = 0
-        self.destroyed = False
-    
+
         self.movement = True
         self.fire = False     
         self.right = False
@@ -59,11 +58,10 @@ class Player:
         # Check players health.
         # If health == 0 GameOver.
         if health.hitpoints == 0:
-            self.destroyed = True
             self.movement = False
-            Resources.game_over = True
+            PlayerData.GAME_OVER = True
+            PlayerData.PLAYER_WON = False
         
-            
     def get_sprite(self, x, y, w, h, new_width, new_height):
         player = pygame.Surface((w, h)).convert()
         player.set_colorkey((255, 255, 255)) # Sprite background is white
@@ -75,7 +73,7 @@ class Player:
 
 
     def draw(self):
-        if self.cooldown_time % 10 == 0 and self.destroyed == False:
+        if self.cooldown_time % 10 == 0:
             # This is where the sprite get drawn to the screen.
             self.window.blit(self.image, (self.rect.x, self.rect.y))
         

@@ -23,7 +23,7 @@ class Bullet():
     def update(self, player, health, explosion, explosion_group, alien, scoreboard):
         for bullet in self.bullets[:]:
             # Check if bullet hit player
-            if player.rect.collidepoint(bullet["position"][0], bullet["position"][1]) and bullet["entity"] == 'alien' and player.cooldown_time <= 0 and player.destroyed == False:
+            if player.rect.collidepoint(bullet["position"][0], bullet["position"][1]) and bullet["entity"] == 'alien' and player.cooldown_time <= 0:
                 # Give player temporary invisibility.
                 player.cooldown()
                 # Blow up ship animation

@@ -3,6 +3,7 @@ from pygame.locals import *
 from screentype import ScreenType
 from screen import *
 from resources import *
+from playerdata import PlayerData
 
 class Game():
     def __init__(self, window):
@@ -14,6 +15,10 @@ class Game():
 
 
     def switch_screen(self, screen_type):
+
+        if self.screen_type == ScreenType.GAME:
+            PlayerData.reset_player_game_state()
+
         self.screen_type = screen_type
 
         self.screen.dispose()
@@ -40,8 +45,6 @@ class Game():
         self.clock.tick(Resources.FPS)
 
     def __handle_screen_swap(self):
-        self.screen.dispose()
-
         match self.screen_type:
             case ScreenType.HOME: self.switch_screen(ScreenType.GAME)
             case ScreenType.GAME: self.switch_screen(ScreenType.DEATH)

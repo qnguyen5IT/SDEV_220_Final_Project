@@ -7,6 +7,7 @@ from scoreboard import Scoreboard
 from playerhealth import PlayerHealth
 from player import Player
 from resources import *
+from playerdata import PlayerData
 
 class Screen:
     def __init__(self, game):
@@ -111,10 +112,9 @@ class GameScreen(Screen):
         self.explosion_group.update()
         self.bullet.update(self.player, self.health, self.explosion, self.explosion_group, self.alien, self.scoreboard)
 
-        # WHENEVER PLAYER DIES, RETURN FALSE
         self.ship_x += 1 
 
-        return True
+        return not PlayerData.GAME_OVER
 
     def draw(self):     
         self.scoreboard.draw()
@@ -151,6 +151,30 @@ class DeathScreen(Screen):
         return True
     
     def draw(self):
-        rect = self.play_button.get_rect()
-        rect.center = (400, 300)
+        death_text = ""
+
+        if PlayerData.PLAYER_WON:
+            death_text = "You Won"
+        else:
+            death_text = "You Lost"
+
+        death_text_surface = Resources.TEXT_FONT.render(death_text, True, (255, 255, 255))
+        best_score_text_surface = Resources.TEXT_FONT.render("Best Score: " + PlayerData.BEST_SCORE.__str__(), True, (255, 255, 255))
+        score_text_surface = Resources.TEXT_FONT.render("Score: " + PlayerData.CURRENT_SCORE.__str__(), True, (255, 255, 255))
+
+        rect = self.__set_centered_surface(death_text_surface, (400, 100))
+        self.game.window.blit(death_text_surface, rect)
+
+        rect = self.__set_centered_surface(best_score_text_surface, (400, 150))
+        self.game.window.blit(best_score_text_surface, rect)
+        
+        rect = self.__set_centered_surface(score_text_surface, (400, 200))
+        self.game.window.blit(score_text_surface, rect)
+
+        rect = self.__set_centered_surface(self.play_button, (400, 300))
         self.game.window.blit(self.play_button, rect)
+
+    def __set_centered_surface(self, surface, pos):
+        rect = surface.get_rect()
+        rect.center = pos
+        return rect
