@@ -40,6 +40,10 @@ class HomeScreen(Screen):
                 if event.key == pygame.K_RETURN and pygame.key.get_mods() & pygame.KMOD_ALT:
                     pygame.display.toggle_fullscreen()
 
+                elif event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
+
                     
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if rect.collidepoint(event.pos):
@@ -99,10 +103,6 @@ class GameScreen(Screen):
                 if event.key == pygame.K_LEFT:
                     self.player.left = False
     
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                pos = pygame.mouse.get_pos()
-                self.explosion.create(pos[0], pos[1])
-                self.explosion_group.add(self.explosion)
    
         # This is where things are checked like collisions, did the player
         # get hit by a projectile.
@@ -147,6 +147,12 @@ class DeathScreen(Screen):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if rect.collidepoint(event.pos):
                     return False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
+                    
+
         
         return True
     
