@@ -1,5 +1,6 @@
 import pygame
 
+from playerdata import PlayerData
 
 #Create bullets class
 # Player = green
@@ -20,7 +21,7 @@ class Bullet():
     def create(self, x, y, direction, entity):
         self.bullets.append({"position":[x, y], "direction":direction, "entity":entity})
 
-    def update(self, player, health, explosion, explosion_group, alien, scoreboard):
+    def update(self, player, health, explosion, explosion_group, alien):
         for bullet in self.bullets[:]:
             # Check if bullet hit player
             if player.rect.collidepoint(bullet["position"][0], bullet["position"][1]) and bullet["entity"] == 'alien' and player.cooldown_time <= 0:
@@ -45,7 +46,7 @@ class Bullet():
                     # Delete bullet
                     self.bullets.remove(bullet)
                     # Rank up score.
-                    scoreboard.score += 20
+                    PlayerData.CURRENT_SCORE += 20 
             
             # Update position and delete if not on screen
             if bullet["direction"] == "down":

@@ -16,8 +16,12 @@ class Game():
 
     def switch_screen(self, screen_type):
 
-        if self.screen_type == ScreenType.GAME:
+        if self.screen_type == ScreenType.HOME:
             PlayerData.reset_player_game_state()
+
+        # Check if player beat high score.
+        elif self.screen_type == ScreenType.GAME:
+            PlayerData.check_for_high_score()
 
         self.screen_type = screen_type
 

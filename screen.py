@@ -110,7 +110,7 @@ class GameScreen(Screen):
         self.player.update(self.health, self.bullet)
         self.alien.update(self.bullet)
         self.explosion_group.update()
-        self.bullet.update(self.player, self.health, self.explosion, self.explosion_group, self.alien, self.scoreboard)
+        self.bullet.update(self.player, self.health, self.explosion, self.explosion_group, self.alien)
 
         self.ship_x += 1 
 
